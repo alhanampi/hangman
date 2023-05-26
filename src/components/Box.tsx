@@ -25,11 +25,11 @@ const Box: FC<IBox> = ({
         isLetterUsed ||
         (chosenChar !== null &&
           chosenChar.toLowerCase() === secret.toLowerCase());
-      setShouldShowLetter(!!updatedLetter); 
+      setShouldShowLetter(!!updatedLetter);
     }
   }, [isLetterUsed, isClicked, chosenChar, secret]); //to ensure it doesn't show the character before submitting!
 
-  const letterToShow = shouldShowLetter ? secret : "_";
+  const letterToShow = shouldShowLetter ? secret : "";
 
   return (
     <div key={index} className="box">

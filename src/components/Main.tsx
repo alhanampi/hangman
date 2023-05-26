@@ -69,7 +69,7 @@ const Main: FC = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Hangman game</h1>
       <form onSubmit={sendChar}>
         {won === null ? (
@@ -92,7 +92,7 @@ const Main: FC = () => {
               maxLength={1}
               type="text"
             />
-            <button type="submit">Try out letter!</button>
+            <button className="try" type="submit">Try out this letter!</button>
             <p>Remaining Lives: {life}</p>
           </div>
         ) : won === true ? (
