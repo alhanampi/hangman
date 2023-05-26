@@ -4,8 +4,24 @@ import Box from "../Box";
 import "./styles.css";
 
 const Main: FC = () => {
-  const secretWord: string = "synchrony";
-  const splitWord: string[] = secretWord.split("");
+  const secretWords: string[] = [
+    "synchrony",
+    "method",
+    "globallogic",
+    "react",
+    "frontend",
+    "coding",
+    "challenge",
+  ];
+
+  const [splitWord, setSplitWord] = useState<string[]>([]);
+
+  useEffect(() => {
+    const randomWord =
+      secretWords[Math.floor(Math.random() * secretWords.length)];
+    setSplitWord(randomWord.split(""));
+  }, []);
+
   const [usedLetters, setUsedLetters] = useState<string[]>([]);
   const [chosenChar, setChosenChar] = useState<string>("");
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -13,8 +29,8 @@ const Main: FC = () => {
   const [won, setWon] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const allLettersPresent = splitWord.filter(
-      (letter) => usedLetters.includes(letter)
+    const allLettersPresent = splitWord.filter((letter) =>
+      usedLetters.includes(letter)
     );
 
     if (allLettersPresent.length === splitWord.length) {
@@ -35,10 +51,12 @@ const Main: FC = () => {
         setWon(false);
       }
 
-      setUsedLetters((prevUsedLetters) => [
-        ...prevUsedLetters,
-        inputChar.toLowerCase(),
-      ]);
+      if (!usedLetters.includes(inputChar)) {
+        setUsedLetters((prevUsedLetters) => [
+          ...prevUsedLetters,
+          inputChar.toLowerCase(),
+        ]);
+      }
     }
 
     setChosenChar("");
@@ -51,6 +69,9 @@ const Main: FC = () => {
   };
 
   const reset = () => {
+    const randomWord =
+      secretWords[Math.floor(Math.random() * secretWords.length)];
+    setSplitWord(randomWord.split(""));
     setChosenChar("");
     setWon(null);
     setLife(5);
@@ -81,8 +102,19 @@ const Main: FC = () => {
               maxLength={1}
               type="text"
             />
-            <button className="try" type="submit">Try out this letter!</button>
+            <button className="try" type="submit">
+              Try out this letter!
+            </button>
             <p>Remaining Lives: {life}</p>
+
+            {usedLetters.length > 0 && (
+              <p>
+                You already used this letters!{" "}
+                {usedLetters.map((used) => (
+                  <span>{used}, </span>
+                ))}
+              </p>
+            )}
           </div>
         ) : won === true ? (
           <>
