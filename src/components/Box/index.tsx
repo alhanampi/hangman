@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import "../index.css";
+import "./styles.css";
 
 interface IBox {
   secret: string;
